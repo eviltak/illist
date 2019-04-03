@@ -1,14 +1,21 @@
 mod tests;
 
 pub struct FreeListNode<T> {
-    data: T,
+    data: Option<T>,
     next: FreeListId,
 }
 
 impl<T> FreeListNode<T> {
     pub fn new(data: T, next: FreeListId) -> FreeListNode<T> {
         FreeListNode {
-            data,
+            data: Some(data),
+            next,
+        }
+    }
+
+    pub fn empty(next: FreeListId) -> FreeListNode<T> {
+        FreeListNode {
+            data: None,
             next,
         }
     }
@@ -41,7 +48,7 @@ impl<T> FreeList<T> {
             self.object_pool.push(FreeListNode::new(data, self.next_free_object_id + 1));
         }
             else {
-                self.object_pool[self.next_free_object_id].data = data;
+                self.object_pool[self.next_free_object_id].data = Some(data);
             }
         
         self.object_count += 1;
@@ -53,18 +60,25 @@ impl<T> FreeList<T> {
     
     pub fn free(&mut self, id: FreeListId) {
         let pool_object = self.object_pool.get_mut(id).expect("Invalid object id");
+
         pool_object.next = self.next_free_object_id;
+        pool_object.data = None;
+
         self.next_free_object_id = id;
         
         self.object_count -= 1;
     }
     
     pub fn get(&self, id: FreeListId) -> &T {
-        &self.object_pool.get(id).expect("Invalid object id").data
+        self.object_pool.get(id)
+            .and_then(|node| node.data.as_ref())
+            .expect("Invalid object id")
     }
     
     pub fn get_mut(&mut self, id: FreeListId) -> &mut T {
-        &mut self.object_pool.get_mut(id).expect("Invalid object id").data
+        self.object_pool.get_mut(id)
+            .and_then(|node| node.data.as_mut())
+            .expect("Invalid object id")
     }
 }
 
