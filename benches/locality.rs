@@ -11,8 +11,8 @@ use rand::distributions::{IndependentSample, Range};
 
 const N: usize = 20000;
 const NON_CONTIGUOUS_BLOCK_SIZE: usize = N;
-const LARGE_INTERVAL: usize = 8;
-const SMALL_INTERVAL: usize = 2;
+const LARGE_INTERVAL: usize = N / 40;
+const SMALL_INTERVAL: usize = 8;
 const NO_INTERVAL: usize = 1;
 
 fn make_block_non_contiguous_and_allocate(interval: usize) {
