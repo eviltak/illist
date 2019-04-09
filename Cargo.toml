@@ -1,7 +1,12 @@
 [package]
 name = "free-list"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Arav Singhal <singhal.arav@gmail.com>"]
+description = "A free list implementation with Iron Power."
+repository = "https://github.com/eviltak/free-list"
+readme = "README.md"
+keywords = [ "collection", "free-list", "list"]
+license = "MIT"
 
 [dependencies]
 
