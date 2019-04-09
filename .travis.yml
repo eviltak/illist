@@ -1,15 +1,15 @@
 language: rust
 rust:
-  - stable
-  - beta
-  - nightly
+- stable
+- beta
+- nightly
 matrix:
   allow_failures:
-    - rust: nightly
+  - rust: nightly
 deploy:
   provider: cargo
   token:
-    secure: IA+Q+5SdTaIEYzpbAJ+Fkq+fCKT8DdHOqYhAettKo65Q4In6gopiqrjlvlqgAmuTNWHx+Cb8IUO1v863PL35Jrb/pBk6uaNEGXy4rPN0msCgqGyr13gtktXj8sEABi3E6NH6vOf/lNZUL2y3ORI1tyIQCSAeXZtjOxfwpRzp+aLWwvtDRvnan5jewTfOQNbDILHLNT2WuYM4m02PYLEquZbhqULkxJhoWbr72mbIntLHwRmrqisBELYdB0cxyhKT9+E0LwJ4YD5cgvJU9pDfV4fk1EQSqqP7cetFO6ZM19jJUj5HMbOBs2zL5mikjZscRU6+zfFOlxvGnB3aMFTeuMh4jfOZXzz4pUHG8+FAMQwLSafPnkJWywl3RCVU01ezpWRi6puLeo0Y3w/9EmDbD4mKffr0TOvF8+lvIksQKlohJGkOiOKFYHglvMj55RUq3DBoRYCy1AfP+MJLJalY1e6REzTzaOuqXCJ2xCgEzKuB66GBVJECF+p0wZxX72f9JRw2/MA5Uwr/mdnV2K5y/vaxZmDbK7SAkfS8YU2r0k+IrfC203Fw3bQDn1EGWfPd4tzL54X2ErnCW9c0776hpcmBybVvdss+qx6nnv8eVRt54CnHkpFULa1ZUs3pAf9s6OlA977cbYpNsI9wab1mZOvu1i9JqKB1xcNs0qatCJ8=
+    secure: G/y6eHKjKtPMmNkFoRa6+ujL4PRuTZxaL0j53CIg4PxdNPxJl0TRQgnKzspkXSoIN3UCZ1teOuyBUUIRDeOV4Ug9R1547gDLsyc8bbrXRy8CVs0qza3AOduct6KrHUxfIxUkHgQFqY8Xm9YU7XZsFTZmr755geMZs7b8YS8NO/tjD+vWTPaqqvXwH2O6iGT3VEdm4vr0MKQnuFvY83UIuclZTYWJ/JG8NGT8xZqqTdctlA8qAJhyZ9+C4ni69P7tErJAAYTyidCo++cng9Pkovg1qmvKE8m8GPvcXpXuCdEJbVlNu92LQq2cr2X8WnbbMwJg4VZEmyfiA/2KXsZ9iHwPu/WpQEmkCMiRIGujDZiEhRiX+3kMdpPe/WZqI/K/CGsAlWKX/SpSHC1mp2s3ziQPnRk7DlGs0Xo3ALyYUMa9Obn+oODEWmJltkxi7G7CrX6f155FVUup1VqA4rBJq6JQICiQTEHCaewYSVvFsWSXDJTkJKt+e+fgnVs6Ql5A79EUlx8FDalRe/rtPfCv1EQgLiLOeDUDizEL1eRJWrdhYKFA1kQgFdQeRkpfHqwkdJAI4zyZ5pZ6iYCxEBtqajiygAJEOptw7h6ugjQ+Ybzu/DFVmlR8kOMFiuv0uAWfQr2N14+HJmW/8B2HXLkjLWeuXkDcxfbRMsKuyO/93Ec=
   on:
     branch: master
     tags: true
