@@ -32,32 +32,33 @@ pub struct FreeList<T> {
 impl<T> FreeList<T> {
     pub fn new(initial_capacity: FreeListId) -> FreeList<T> {
         let mut node_pool = Vec::with_capacity(initial_capacity);
-        
+
         FreeList {
             object_pool: node_pool,
             object_count: 0,
             next_free_object_id: 0,
         }
     }
-    
+
     pub fn allocate(&mut self, data: T) -> FreeListId {
         assert!(self.next_free_object_id <= self.object_pool.len());
-        
+
         if self.next_free_object_id == self.object_pool.len() {
             // Expand our node pool
             self.object_pool.push(FreeListNode::new(data, self.next_free_object_id + 1));
+        } else {
+            self.object_pool[self.next_free_object_id].data = Some(data);
         }
-            else {
-                self.object_pool[self.next_free_object_id].data = Some(data);
-            }
-        
+
         self.object_count += 1;
-        
+
         let object_id = self.next_free_object_id;
-        self.next_free_object_id += 1;
+
+        self.next_free_object_id = self.object_pool[object_id].next;
+
         object_id
     }
-    
+
     pub fn free(&mut self, id: FreeListId) {
         let pool_object = self.object_pool.get_mut(id).expect("Invalid object id");
 
@@ -65,16 +66,16 @@ impl<T> FreeList<T> {
         pool_object.data = None;
 
         self.next_free_object_id = id;
-        
+
         self.object_count -= 1;
     }
-    
+
     pub fn get(&self, id: FreeListId) -> &T {
         self.object_pool.get(id)
             .and_then(|node| node.data.as_ref())
             .expect("Invalid object id")
     }
-    
+
     pub fn get_mut(&mut self, id: FreeListId) -> &mut T {
         self.object_pool.get_mut(id)
             .and_then(|node| node.data.as_mut())
