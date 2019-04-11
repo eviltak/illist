@@ -46,3 +46,39 @@ fn free() {
     assert_eq!(pool.object_count, 2);
     assert_eq!(pool.next_free_object_id, b);
 }
+
+#[test]
+fn iter() {
+    let mut list = FreeList::default();
+    let (a, b, c) = (list.allocate(1u32), list.allocate(2), list.allocate(3));
+
+    {
+        let mut iter = list.iter();
+
+        assert_eq!(Some((a, &1)), iter.next());
+        assert_eq!(Some((b, &2)), iter.next());
+        assert_eq!(Some((c, &3)), iter.next());
+        assert_eq!(None, iter.next());
+    }
+
+    list.free(b);
+
+    {
+        let mut iter = list.iter();
+
+        assert_eq!(Some((a, &1)), iter.next());
+        assert_eq!(Some((c, &3)), iter.next());
+        assert_eq!(None, iter.next());
+    }
+
+    let d = list.allocate(4);
+
+    {
+        let mut iter = list.iter();
+
+        assert_eq!(Some((a, &1)), iter.next());
+        assert_eq!(Some((d, &4)), iter.next());
+        assert_eq!(Some((c, &3)), iter.next());
+        assert_eq!(None, iter.next());
+    }
+}

@@ -1,3 +1,4 @@
+#[cfg(test)]
 mod tests;
 
 pub struct FreeListNode<T> {
@@ -80,6 +81,14 @@ impl<T> FreeList<T> {
         self.object_pool.get_mut(id)
             .and_then(|node| node.data.as_mut())
             .expect("Invalid object id")
+    }
+
+    pub fn iter(&self) -> impl Iterator<Item = (FreeListId, &T)> {
+        return self.object_pool.iter()
+            .enumerate()
+            .filter_map(|(id, node)| {
+                node.data.as_ref().map(|object| (id, object))
+            });
     }
 }
 
