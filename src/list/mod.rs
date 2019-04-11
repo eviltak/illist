@@ -88,11 +88,19 @@ impl<T> FreeList<T> {
     }
 
     pub fn iter(&self) -> impl Iterator<Item = (FreeListId, &T)> {
-        return self.nodes.iter()
+        self.nodes.iter()
             .enumerate()
             .filter_map(|(id, node)| {
                 node.data.as_ref().map(|object| (id, object))
-            });
+            })
+    }
+
+    pub fn iter_mut(&mut self) -> impl Iterator<Item = (FreeListId, &mut T)> {
+        self.nodes.iter_mut()
+            .enumerate()
+            .filter_map(|(id, node)| {
+                node.data.as_mut().map(|object| (id, object))
+            })
     }
 }
 

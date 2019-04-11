@@ -61,6 +61,15 @@ fn iter() {
         assert_eq!(None, iter.next());
     }
 
+    {
+        let mut iter = list.iter_mut();
+
+        assert_eq!(Some((a, &mut 1)), iter.next());
+        assert_eq!(Some((b, &mut 2)), iter.next());
+        assert_eq!(Some((c, &mut 3)), iter.next());
+        assert_eq!(None, iter.next());
+    }
+
     list.free(b);
 
     {
@@ -68,6 +77,14 @@ fn iter() {
 
         assert_eq!(Some((a, &1)), iter.next());
         assert_eq!(Some((c, &3)), iter.next());
+        assert_eq!(None, iter.next());
+    }
+
+    {
+        let mut iter = list.iter_mut();
+
+        assert_eq!(Some((a, &mut 1)), iter.next());
+        assert_eq!(Some((c, &mut 3)), iter.next());
         assert_eq!(None, iter.next());
     }
 
@@ -79,6 +96,15 @@ fn iter() {
         assert_eq!(Some((a, &1)), iter.next());
         assert_eq!(Some((d, &4)), iter.next());
         assert_eq!(Some((c, &3)), iter.next());
+        assert_eq!(None, iter.next());
+    }
+
+    {
+        let mut iter = list.iter_mut();
+
+        assert_eq!(Some((a, &mut 1)), iter.next());
+        assert_eq!(Some((d, &mut 4)), iter.next());
+        assert_eq!(Some((c, &mut 3)), iter.next());
         assert_eq!(None, iter.next());
     }
 }
