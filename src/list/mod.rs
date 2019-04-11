@@ -25,66 +25,66 @@ impl<T> FreeListNode<T> {
 pub type FreeListId = usize;
 
 pub struct FreeList<T> {
-    object_pool: Vec<FreeListNode<T>>,
-    pub object_count: usize,
-    next_free_object_id: FreeListId,
+    nodes: Vec<FreeListNode<T>>,
+    pub count: usize,
+    next_free_id: FreeListId,
 }
 
 impl<T> FreeList<T> {
-    pub fn new(initial_capacity: FreeListId) -> FreeList<T> {
+    pub fn new(initial_capacity: usize) -> FreeList<T> {
         let mut node_pool = Vec::with_capacity(initial_capacity);
 
         FreeList {
-            object_pool: node_pool,
-            object_count: 0,
-            next_free_object_id: 0,
+            nodes: node_pool,
+            count: 0,
+            next_free_id: 0,
         }
     }
 
     pub fn allocate(&mut self, data: T) -> FreeListId {
-        assert!(self.next_free_object_id <= self.object_pool.len());
+        debug_assert!(self.next_free_id <= self.nodes.len());
 
-        if self.next_free_object_id == self.object_pool.len() {
+        if self.next_free_id == self.nodes.len() {
             // Expand our node pool
-            self.object_pool.push(FreeListNode::new(data, self.next_free_object_id + 1));
+            self.nodes.push(FreeListNode::new(data, self.next_free_id + 1));
         } else {
-            self.object_pool[self.next_free_object_id].data = Some(data);
+            self.nodes[self.next_free_id].data = Some(data);
         }
 
-        self.object_count += 1;
+        self.count += 1;
 
-        let object_id = self.next_free_object_id;
+        let object_id = self.next_free_id;
 
-        self.next_free_object_id = self.object_pool[object_id].next;
+        self.next_free_id = self.nodes[object_id].next;
 
         object_id
     }
 
     pub fn free(&mut self, id: FreeListId) {
-        let pool_object = self.object_pool.get_mut(id).expect("Invalid object id");
+        let pool_object = self.nodes.get_mut(id).expect("Invalid object id");
 
-        pool_object.next = self.next_free_object_id;
+        pool_object.next = self.next_free_id;
         pool_object.data = None;
 
-        self.next_free_object_id = id;
+        self.next_free_id = id;
 
-        self.object_count -= 1;
+        self.count -= 1;
     }
 
     pub fn get(&self, id: FreeListId) -> &T {
-        self.object_pool.get(id)
+        self.nodes.get(id)
             .and_then(|node| node.data.as_ref())
             .expect("Invalid object id")
     }
 
     pub fn get_mut(&mut self, id: FreeListId) -> &mut T {
-        self.object_pool.get_mut(id)
+        self.nodes.get_mut(id)
             .and_then(|node| node.data.as_mut())
             .expect("Invalid object id")
     }
 
     pub fn iter(&self) -> impl Iterator<Item = (FreeListId, &T)> {
-        return self.object_pool.iter()
+        return self.nodes.iter()
             .enumerate()
             .filter_map(|(id, node)| {
                 node.data.as_ref().map(|object| (id, object))
