@@ -26,7 +26,7 @@ pub type FreeListId = usize;
 
 pub struct FreeList<T> {
     nodes: Vec<FreeListNode<T>>,
-    pub count: usize,
+    count: usize,
     next_free_id: FreeListId,
 }
 
@@ -81,6 +81,10 @@ impl<T> FreeList<T> {
         self.nodes.get_mut(id)
             .and_then(|node| node.data.as_mut())
             .expect("Invalid object id")
+    }
+
+    pub fn len(&self) -> usize {
+        self.count
     }
 
     pub fn iter(&self) -> impl Iterator<Item = (FreeListId, &T)> {
