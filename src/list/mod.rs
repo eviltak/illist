@@ -32,10 +32,10 @@ pub struct FreeList<T> {
 
 impl<T> FreeList<T> {
     pub fn new(initial_capacity: usize) -> FreeList<T> {
-        let mut node_pool = Vec::with_capacity(initial_capacity);
+        let nodes = Vec::with_capacity(initial_capacity);
 
         FreeList {
-            nodes: node_pool,
+            nodes,
             count: 0,
             next_free_id: 0,
         }

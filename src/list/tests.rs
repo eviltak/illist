@@ -35,7 +35,7 @@ fn allocate() {
 #[test]
 fn free() {
     let mut list = FreeList::default();
-    let (a, b, c) = (list.allocate(0), list.allocate(0), list.allocate(0));
+    let (_a, b, _c) = (list.allocate(0), list.allocate(0), list.allocate(0));
 
     {
         *list.get_mut(b) = 111u32;
