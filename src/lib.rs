@@ -73,7 +73,7 @@ impl<T> List<T> {
         self.count == 0
     }
 
-    pub fn iter(&self) -> impl Iterator<Item = (usize, &T)> {
+    pub fn unordered_iter(&self) -> impl Iterator<Item = (usize, &T)> {
         self.nodes.iter()
             .enumerate()
             .filter_map(|(id, node)| {
@@ -81,7 +81,7 @@ impl<T> List<T> {
             })
     }
 
-    pub fn iter_mut(&mut self) -> impl Iterator<Item = (usize, &mut T)> {
+    pub fn unordered_iter_mut(&mut self) -> impl Iterator<Item = (usize, &mut T)> {
         self.nodes.iter_mut()
             .enumerate()
             .filter_map(|(id, node)| {

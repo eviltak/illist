@@ -48,12 +48,12 @@ fn free() {
 }
 
 #[test]
-fn iter() {
+fn unordered_iter() {
     let mut list = List::default();
     let (a, b, c) = (list.allocate(1u32), list.allocate(2), list.allocate(3));
 
     {
-        let mut iter = list.iter();
+        let mut iter = list.unordered_iter();
 
         assert_eq!(Some((a, &1)), iter.next());
         assert_eq!(Some((b, &2)), iter.next());
@@ -62,7 +62,7 @@ fn iter() {
     }
 
     {
-        let mut iter = list.iter_mut();
+        let mut iter = list.unordered_iter_mut();
 
         assert_eq!(Some((a, &mut 1)), iter.next());
         assert_eq!(Some((b, &mut 2)), iter.next());
@@ -73,7 +73,7 @@ fn iter() {
     list.free(b);
 
     {
-        let mut iter = list.iter();
+        let mut iter = list.unordered_iter();
 
         assert_eq!(Some((a, &1)), iter.next());
         assert_eq!(Some((c, &3)), iter.next());
@@ -81,7 +81,7 @@ fn iter() {
     }
 
     {
-        let mut iter = list.iter_mut();
+        let mut iter = list.unordered_iter_mut();
 
         assert_eq!(Some((a, &mut 1)), iter.next());
         assert_eq!(Some((c, &mut 3)), iter.next());
@@ -91,7 +91,7 @@ fn iter() {
     let d = list.allocate(4);
 
     {
-        let mut iter = list.iter();
+        let mut iter = list.unordered_iter();
 
         assert_eq!(Some((a, &1)), iter.next());
         assert_eq!(Some((d, &4)), iter.next());
@@ -100,7 +100,7 @@ fn iter() {
     }
 
     {
-        let mut iter = list.iter_mut();
+        let mut iter = list.unordered_iter_mut();
 
         assert_eq!(Some((a, &mut 1)), iter.next());
         assert_eq!(Some((d, &mut 4)), iter.next());
