@@ -2,7 +2,7 @@ use super::*;
 
 #[test]
 fn allocate() {
-    let mut list = FreeList::default();
+    let mut list = List::default();
     let a = list.allocate(1u32);
 
     assert_eq!(list.count, 1);
@@ -34,7 +34,7 @@ fn allocate() {
 
 #[test]
 fn free() {
-    let mut list = FreeList::default();
+    let mut list = List::default();
     let (_a, b, _c) = (list.allocate(0), list.allocate(0), list.allocate(0));
 
     {
@@ -49,7 +49,7 @@ fn free() {
 
 #[test]
 fn iter() {
-    let mut list = FreeList::default();
+    let mut list = List::default();
     let (a, b, c) = (list.allocate(1u32), list.allocate(2), list.allocate(3));
 
     {

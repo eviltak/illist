@@ -3,19 +3,19 @@ mod node;
 #[cfg(test)]
 mod tests;
 
-use node::FreeListNode;
+use node::Node;
 
-pub struct FreeList<T> {
-    nodes: Vec<FreeListNode<T>>,
+pub struct List<T> {
+    nodes: Vec<Node<T>>,
     count: usize,
     next_free_id: usize,
 }
 
-impl<T> FreeList<T> {
-    pub fn new(initial_capacity: usize) -> FreeList<T> {
+impl<T> List<T> {
+    pub fn new(initial_capacity: usize) -> List<T> {
         let nodes = Vec::with_capacity(initial_capacity);
 
-        FreeList {
+        List {
             nodes,
             count: 0,
             next_free_id: 0,
@@ -27,7 +27,7 @@ impl<T> FreeList<T> {
 
         if self.next_free_id == self.nodes.len() {
             // Expand our node pool
-            self.nodes.push(FreeListNode::new(data, self.next_free_id + 1));
+            self.nodes.push(Node::new(data, self.next_free_id + 1));
         } else {
             self.nodes[self.next_free_id].data = Some(data);
         }
@@ -89,8 +89,8 @@ impl<T> FreeList<T> {
     }
 }
 
-impl<T> Default for FreeList<T> {
-    fn default() -> FreeList<T> {
-        FreeList::new(64)
+impl<T> Default for List<T> {
+    fn default() -> List<T> {
+        List::new(64)
     }
 }
