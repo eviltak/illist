@@ -5,6 +5,7 @@ mod tests;
 
 use node::Node;
 
+#[derive(Default)]
 pub struct List<T> {
     nodes: Vec<Node<T>>,
     count: usize,
@@ -86,11 +87,5 @@ impl<T> List<T> {
             .filter_map(|(id, node)| {
                 node.data.as_mut().map(|object| (id, object))
             })
-    }
-}
-
-impl<T> Default for List<T> {
-    fn default() -> List<T> {
-        List::new(64)
     }
 }
