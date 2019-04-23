@@ -6,7 +6,7 @@ authors = ["Arav Singhal <singhal.arav@gmail.com>"]
 description = "An indexable linked list implementation backed by a Vec"
 repository = "https://github.com/eviltak/illist"
 readme = "README.md"
-keywords = ["collection", "linked-list", "list", "linked", "indexable", "index"]
+keywords = ["collection", "linked-list", "list", "index"]
 license = "MIT"
 
 [dependencies]
