@@ -1,11 +1,12 @@
 [package]
-name = "free-list"
-version = "0.2.0"
+name = "illist"
+version = "0.1.0"
+edition = '2018'
 authors = ["Arav Singhal <singhal.arav@gmail.com>"]
-description = "A free list implementation with Iron Power."
-repository = "https://github.com/eviltak/free-list"
+description = "An indexable linked list implementation backed by a Vec"
+repository = "https://github.com/eviltak/illist"
 readme = "README.md"
-keywords = [ "collection", "free-list", "list"]
+keywords = ["collection", "linked-list", "list", "linked", "indexable", "index"]
 license = "MIT"
 
 [dependencies]
