@@ -1,6 +1,6 @@
 [package]
 name = "illist"
-version = "0.1.0"
+version = "0.0.1"
 edition = '2018'
 authors = ["Arav Singhal <singhal.arav@gmail.com>"]
 description = "An indexable linked list implementation backed by a Vec"
