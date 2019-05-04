@@ -10,6 +10,7 @@ impl Nullable for Id {
     const NULL: Id = std::usize::MAX;
 }
 
+#[derive(Clone)]
 pub struct Node<T> {
     pub data: Option<T>,
     pub prev: Id,

@@ -6,7 +6,7 @@ mod tests;
 pub use node::Id;
 use node::{Node, Nullable};
 
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct List<T> {
     nodes: Vec<Node<T>>,
     count: usize,
