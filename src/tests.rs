@@ -5,18 +5,18 @@ fn push_back() {
     let mut list = List::default();
     let a = list.push_back(1u32);
 
-    assert_eq!(list.count, 1);
-    assert_eq!(list.tail_id, a);
+    assert_eq!(1, list.count);
+    assert_eq!(a, list.tail_id);
 
     let b = list.push_back(1);
 
-    assert_eq!(list.count, 2);
-    assert_eq!(list.tail_id, b);
+    assert_eq!(2, list.count);
+    assert_eq!(b, list.tail_id);
 
     let c = list.push_back(1);
 
-    assert_eq!(list.count, 3);
-    assert_eq!(list.tail_id, c);
+    assert_eq!(3, list.count);
+    assert_eq!(c, list.tail_id);
 }
 
 #[test]
@@ -30,9 +30,9 @@ fn pop() {
 
     list.pop(b);
 
-    assert_eq!(list.count, 2);
+    assert_eq!(2, list.count);
     assert_eq!(c, list.tail_id);
-    assert_eq!(list.nodes[list.tail_id].next, b);
+    assert_eq!(b, list.nodes[list.tail_id].next);
 }
 
 #[test]
@@ -45,10 +45,10 @@ fn push_pop() {
 
     let new_id = list.push_back(1);
 
-    assert_eq!(new_id, b);
-    assert_eq!(list.get(new_id), &1);
-    assert_eq!(list.count, 3);
-    assert_eq!(list.tail_id, new_id);
+    assert_eq!(b, new_id);
+    assert_eq!(&1, list.get(new_id));
+    assert_eq!(3, list.count);
+    assert_eq!(new_id, list.tail_id);
 }
 
 #[test]
