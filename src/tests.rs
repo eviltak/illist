@@ -17,19 +17,6 @@ fn push_back() {
 
     assert_eq!(list.count, 3);
     assert_eq!(list.tail_id, c);
-
-
-    list.pop(b);
-
-    assert_eq!(list.count, 2);
-    assert_eq!(list.tail_id, c);
-
-    let new_id = list.push_back(1);
-
-    assert_eq!(new_id, b);
-    assert_eq!(list.get(new_id), &1);
-    assert_eq!(list.count, 3);
-    assert_eq!(list.tail_id, new_id);
 }
 
 #[test]
@@ -46,6 +33,22 @@ fn pop() {
     assert_eq!(list.count, 2);
     assert_eq!(c, list.tail_id);
     assert_eq!(list.nodes[list.tail_id].next, b);
+}
+
+#[test]
+fn push_pop() {
+    let mut list = List::default();
+
+    let (_a, b, _c) = (list.push_back(1u32), list.push_back(1), list.push_back(1));
+
+    list.pop(b);
+
+    let new_id = list.push_back(1);
+
+    assert_eq!(new_id, b);
+    assert_eq!(list.get(new_id), &1);
+    assert_eq!(list.count, 3);
+    assert_eq!(list.tail_id, new_id);
 }
 
 #[test]
