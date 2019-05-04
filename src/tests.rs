@@ -25,7 +25,7 @@ fn pop() {
     let (_a, b, c) = (list.push_back(0), list.push_back(0), list.push_back(0));
 
     {
-        *list.get_mut(b) = 111u32;
+        *list.get_mut(b).unwrap() = 111u32;
     }
 
     list.pop(b);
@@ -46,7 +46,7 @@ fn push_pop() {
     let new_id = list.push_back(1);
 
     assert_eq!(b, new_id);
-    assert_eq!(&1, list.get(new_id));
+    assert_eq!(Some(&1), list.get(new_id));
     assert_eq!(3, list.count);
     assert_eq!(new_id, list.tail_id);
 }
