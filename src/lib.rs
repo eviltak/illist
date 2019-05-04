@@ -70,16 +70,12 @@ impl<T> List<T> {
         self.count -= 1;
     }
 
-    pub fn get(&self, id: Id) -> &T {
-        self.nodes.get(id)
-            .and_then(|node| node.data.as_ref())
-            .expect("Invalid object id")
+    pub fn get(&self, id: Id) -> Option<&T> {
+        self.nodes.get(id).and_then(|node| node.data.as_ref())
     }
 
-    pub fn get_mut(&mut self, id: Id) -> &mut T {
-        self.nodes.get_mut(id)
-            .and_then(|node| node.data.as_mut())
-            .expect("Invalid object id")
+    pub fn get_mut(&mut self, id: Id) -> Option<&mut T> {
+        self.nodes.get_mut(id).and_then(|node| node.data.as_mut())
     }
 
     pub fn len(&self) -> usize {
