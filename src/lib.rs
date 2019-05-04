@@ -60,11 +60,10 @@ impl<T> List<T> {
     }
 
     pub fn pop(&mut self, id: Id) {
-        // TODO: Use indexing
-        let pool_object = self.nodes.get_mut(id).expect("Invalid object id");
+        let node = &mut self.nodes[id];
 
-        pool_object.next = Id::NULL;
-        pool_object.data = None;
+        node.next = Id::NULL;
+        node.data = None;
 
         self.nodes[self.tail_id].next = id;
 
