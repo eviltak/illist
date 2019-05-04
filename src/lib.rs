@@ -24,7 +24,7 @@ impl<T> List<T> {
         }
     }
 
-    pub fn allocate(&mut self, data: T) -> usize {
+    pub fn push_back(&mut self, data: T) -> usize {
         let (new_id, prev_id) =
             match self.nodes.get(self.tail_id) {
                 Some(node) => {
@@ -59,7 +59,7 @@ impl<T> List<T> {
         self.tail_id
     }
 
-    pub fn free(&mut self, id: Id) {
+    pub fn pop(&mut self, id: Id) {
         // TODO: Use indexing
         let pool_object = self.nodes.get_mut(id).expect("Invalid object id");
 

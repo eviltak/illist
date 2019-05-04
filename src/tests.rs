@@ -1,30 +1,30 @@
 use super::*;
 
 #[test]
-fn allocate() {
+fn push_back() {
     let mut list = List::default();
-    let a = list.allocate(1u32);
+    let a = list.push_back(1u32);
 
     assert_eq!(list.count, 1);
     assert_eq!(list.tail_id, a);
 
-    let b = list.allocate(1);
+    let b = list.push_back(1);
 
     assert_eq!(list.count, 2);
     assert_eq!(list.tail_id, b);
 
-    let c = list.allocate(1);
+    let c = list.push_back(1);
 
     assert_eq!(list.count, 3);
     assert_eq!(list.tail_id, c);
 
 
-    list.free(b);
+    list.pop(b);
 
     assert_eq!(list.count, 2);
     assert_eq!(list.tail_id, c);
 
-    let new_id = list.allocate(1);
+    let new_id = list.push_back(1);
 
     assert_eq!(new_id, b);
     assert_eq!(list.get(new_id), &1);
@@ -33,15 +33,15 @@ fn allocate() {
 }
 
 #[test]
-fn free() {
+fn pop() {
     let mut list = List::default();
-    let (_a, b, c) = (list.allocate(0), list.allocate(0), list.allocate(0));
+    let (_a, b, c) = (list.push_back(0), list.push_back(0), list.push_back(0));
 
     {
         *list.get_mut(b) = 111u32;
     }
 
-    list.free(b);
+    list.pop(b);
 
     assert_eq!(list.count, 2);
     assert_eq!(c, list.tail_id);
@@ -51,7 +51,7 @@ fn free() {
 #[test]
 fn unordered_iter() {
     let mut list = List::default();
-    let (a, b, c) = (list.allocate(1u32), list.allocate(2), list.allocate(3));
+    let (a, b, c) = (list.push_back(1u32), list.push_back(2), list.push_back(3));
 
     {
         let mut iter = list.unordered_iter();
@@ -71,7 +71,7 @@ fn unordered_iter() {
         assert_eq!(None, iter.next());
     }
 
-    list.free(b);
+    list.pop(b);
 
     {
         let mut iter = list.unordered_iter();
@@ -89,7 +89,7 @@ fn unordered_iter() {
         assert_eq!(None, iter.next());
     }
 
-    let d = list.allocate(4);
+    let d = list.push_back(4);
 
     {
         let mut iter = list.unordered_iter();
