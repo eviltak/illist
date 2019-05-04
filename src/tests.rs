@@ -6,36 +6,36 @@ fn allocate() {
     let a = list.allocate(1u32);
 
     assert_eq!(list.count, 1);
-    assert_eq!(list.next_free_id, a + 1);
+    assert_eq!(list.tail_id, a);
 
     let b = list.allocate(1);
 
     assert_eq!(list.count, 2);
-    assert_eq!(list.next_free_id, b + 1);
+    assert_eq!(list.tail_id, b);
 
     let c = list.allocate(1);
 
     assert_eq!(list.count, 3);
-    assert_eq!(list.next_free_id, c + 1);
+    assert_eq!(list.tail_id, c);
 
 
     list.free(b);
 
     assert_eq!(list.count, 2);
-    assert_eq!(list.next_free_id, b);
+    assert_eq!(list.tail_id, c);
 
     let new_id = list.allocate(1);
 
     assert_eq!(new_id, b);
     assert_eq!(list.get(new_id), &1);
     assert_eq!(list.count, 3);
-    assert_eq!(list.next_free_id, c + 1);
+    assert_eq!(list.tail_id, new_id);
 }
 
 #[test]
 fn free() {
     let mut list = List::default();
-    let (_a, b, _c) = (list.allocate(0), list.allocate(0), list.allocate(0));
+    let (_a, b, c) = (list.allocate(0), list.allocate(0), list.allocate(0));
 
     {
         *list.get_mut(b) = 111u32;
@@ -44,7 +44,8 @@ fn free() {
     list.free(b);
 
     assert_eq!(list.count, 2);
-    assert_eq!(list.next_free_id, b);
+    assert_eq!(c, list.tail_id);
+    assert_eq!(list.nodes[list.tail_id].next, b);
 }
 
 #[test]
